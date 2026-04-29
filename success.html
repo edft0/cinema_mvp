@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예매 완료 | 사월시네마</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: #f3eee8;
+            color: #343633;
+            font-family: 'Paperlogy', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
+            /* iOS 폰트 크기 자동 조절 방지 */
+        }
+
+        .ticket-card {
+            background-color: #0a0a0a;
+            color: #fff;
+            width: 92%;
+            /* 모바일에서 좌우 여백 확보 */
+            max-width: 380px;
+            margin: 40px auto;
+            /* 상하 여백 충분히 */
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            font-family: 'Paperlogy', sans-serif;
+        }
+
+        .accent-text {
+            color: #459375;
+        }
+
+        .title-large {
+            font-family: 'Paperlogy', sans-serif !important;
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.1; /* 행간을 더 좁게 조정 (약 5px 감소 효과) */
+            letter-spacing: -1.5px;
+        }
+
+        .ticket-image-container {
+            width: 100%;
+            height: 240px; /* 가로 범위를 더 많이 보여주기 위해 높이 축소 */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ticket-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%; /* 얼굴과 팔이 잘 보일 수 있도록 위치 조정 */
+            filter: brightness(0.7);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+
+        .ticket-content {
+            padding: 24px;
+            margin-top: -60px; /* 제목 상단 '8월의' 부분을 침범하지 않도록 여유 있게 조절 */
+            position: relative;
+            z-index: 10;
+        }
+
+        .info-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #459375, transparent);
+            margin: 32px 0;
+            opacity: 0.3;
+        }
+
+        .footer-text {
+            font-size: 1.2rem;
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .logo-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        /* 하단 로고 사이즈 조절 */
+        .footer-logo {
+            width: 100px;
+            height: auto;
+            filter: brightness(1.2);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4 relative">
+    <div class="grain-overlay"></div>
+    <div class="projector-light"></div>
+
+    <div class="animate-slide-up w-full max-w-sm">
+        <div class="ticket-card">
+            <!-- Top Logo/Info -->
+            <div class="logo-section">
+                <div class="flex items-center gap-2">
+                    <img src="assets/top_icon.png" 
+                         onerror="this.src='assets/footer_logo.png'"
+                         class="w-5 h-5 object-contain" alt="Logo">
+                    <span>MEMORY TICKET | 사월시네마</span>
+                </div>
+            </div>
+
+            <!-- Image Section -->
+            <div class="ticket-image-container">
+                <img src="assets/ticket_photo.jpg"
+                    onerror="this.src='https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&q=80&w=1000'"
+                    alt="Movie Visual">
+            </div>
+
+            <!-- Title Section -->
+            <div class="ticket-content">
+                <div class="accent-text title-large mb-10 mt-8"> <!-- 위치를 이미지 바로 아래 적절한 지점으로 조정 -->
+                    8월의<br>크리스마스
+                </div>
+
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <div class="info-label">GUEST</div>
+                            <div class="info-value" id="res-name">-</div>
+                        </div>
+                        <div>
+                            <div class="info-label">PLACE</div>
+                            <div class="info-value">학생회관 403호</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <div class="info-label">DATE</div>
+                            <div class="info-value" id="res-date">-</div>
+                        </div>
+                        <div>
+                            <div class="info-label">TIME</div>
+                            <div class="info-value" id="res-time">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Footer Section (Logo updated) -->
+                <div class="flex justify-end items-end">
+                    <div class="flex flex-col items-end">
+                        <img src="assets/footer_logo.png"
+                            onerror="this.src='https://raw.githubusercontent.com/projectnoonnu/noonnu-font/main/noonnu_logo.png'"
+                            class="footer-logo" alt="Sawol Logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 flex flex-col items-center gap-4">
+            <button onclick="window.location.href='index.html'"
+                class="text-xs font-bold opacity-40 hover:opacity-100 transition-all border-b border-[#343633] border-opacity-20 pb-1">
+                BACK TO HOME
+            </button>
+            <p class="text-[10px] opacity-40 text-center uppercase tracking-widest text-[#343633]">세종대학교 제39대 사회과학대학 학생회
+                '사월'</p>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script>
+        lucide.createIcons();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const reservationId = urlParams.get('id');
+
+        if (reservationId) {
+            const data = CinemaStorage.getById(reservationId);
+            if (data) {
+                document.getElementById('res-name').innerText = data.name;
+
+                // Parse date and time
+                const parts = data.time.split(' ');
+                document.getElementById('res-date').innerText = parts[0];
+                document.getElementById('res-time').innerText = parts[1];
+
+                confetti({
+                    particleCount: 150,
+                    spread: 100,
+                    origin: { y: 0.8 },
+                    colors: ['#459375', '#ffffff', '#343633']
+                });
+            }
+    }
+    </script>
+</body>
+
+</html>
